@@ -7,7 +7,10 @@ module.exports = function() {
   mongoose
     .connect(
       db,
-      { useNewUrlParser: true }
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true
+      }
     )
     .then(() => winston.info(`Connected to ${db}...`));
 };

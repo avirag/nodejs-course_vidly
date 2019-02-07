@@ -16,6 +16,10 @@ module.exports = function() {
 
   try {
     winston.add(
+      new winston.transports.Console({ colorize: true, prettyPrint: true })
+    );
+
+    winston.add(
       new winston.transports.File({
         filename: "logfile.log"
       })
