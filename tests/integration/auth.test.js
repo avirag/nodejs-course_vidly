@@ -1,12 +1,13 @@
 const request = require('supertest');
-const { User } = require('../../models/user');
 const { Genre } = require('../../models/genre');
+const { User } = require('../../models/user');
+const mongoose = require('mongoose');
 
 describe('auth middleware', () => {
   beforeEach(() => server = require('../../index'));
   afterEach(async () => {
-    await Genre.remove({});
-    await server.close();
+    await Genre.remove({}).exec();
+    // await server.close();
   });
 
   let token;
@@ -14,7 +15,7 @@ describe('auth middleware', () => {
   const exec = () => {
     return request(server)
       .post('/api/genres')
-      .set('x-auth-token', )
+      .set('x-auth-token', token)
       .send({ name: 'genre1'});
   };
 

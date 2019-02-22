@@ -16,7 +16,12 @@ const validateObjectId = require('../middleware/validateObjectId');
 // );
 
 router.get("/", async (req, res) => {
-  const genres = await Genre.find().sort("name");
+  const genres = await Genre.find()
+    .select("-__v")
+    .sort("name");
+
+    console.log(genres);
+
   res.send(genres);
 });
 
@@ -33,7 +38,7 @@ router.post("/", auth, async (req, res) => {
   res.send(genre);
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", [auth, validateObjectId], async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -45,7 +50,7 @@ router.put("/:id", async (req, res, next) => {
     { new: true }
   );
   if (!genre) {
-    return res.status(404).send(`Genre ${res.params.id} not found`);
+    return res.status(404).send(`Genre ${req.params.id} not found`);
   }
 
   res.send(genre);
@@ -55,7 +60,7 @@ router.delete("/:id", [auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndDelete(req.params.id);
 
   if (!genre) {
-    return res.status(404).send(`Genre ${res.params.id} not found`);
+    return res.status(404).send(`Genre ${req.params.id} not found`);
   }
   res.send(genre);
 });
@@ -64,7 +69,7 @@ router.get("/:id", validateObjectId, async (req, res) => {
   const genre = await Genre.findById(req.params.id);
 
   if (!genre) {
-    return res.status(404).send(`Genre ${res.params.id} not found`);
+    return res.status(404).send(`Genre ${req.params.id} not found`);
   }
 
   res.send(genre);

@@ -1,5 +1,5 @@
-import { User } from "../../../models/user";
-import auth from "../../../middleware/auth";
+const { User } = require('../../../models/user');
+const auth = require("../../../middleware/auth");
 const mongoose = require('mongoose');
 
 describe('auth middleware', () => {
@@ -11,7 +11,7 @@ describe('auth middleware', () => {
 
     const token = new User(user).generateAuthToken();
     const req = {
-      header: jest.fn().mockRejectedValue(token)
+      header: jest.fn().mockReturnValue(token)
     };
 
     const res = {};

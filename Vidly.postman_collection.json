@@ -1,0 +1,234 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Vidly",
+		"_postman_id": "08655a5e-7638-3f3c-5063-2bca546c679f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Genre - GET list",
+			"request": {
+				"url": "{{url}}/api/genres",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Genre - POST",
+			"request": {
+				"url": "{{url}}/api/genres",
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "{{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New genre2\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Genre - PUT",
+			"request": {
+				"url": "{{url}}/api/genres/5bd62e063e6d5457f32f0223",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New name\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Genre - DELETE",
+			"request": {
+				"url": "{{url}}/api/genres/5c1a30fd4743372dcacc02f9",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "{{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Genre - GET",
+			"request": {
+				"url": "{{url}}/api/genres/5c4209b1f8328a7388a18bc1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Movie - GET list",
+			"request": {
+				"url": "{{url}}/api/movies",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Movies - GET (all)"
+			},
+			"response": []
+		},
+		{
+			"name": "Movie - CREATE",
+			"request": {
+				"url": "{{url}}/api/movies",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"A new movie\",\n\t\"numberInStock\": 1,\n\t\"dailyRentalRate\": 2,\n\t\"genreId\": \"5bd62e063e6d5457f32f021b\"\n}"
+				},
+				"description": "Movies - POST"
+			},
+			"response": []
+		},
+		{
+			"name": "AUTH - login user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"token\", responseBody);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}/api/auth",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test01@h.hu\",\n\t\"password\": \"12345\"\n}"
+				},
+				"description": "Users - POST auth"
+			},
+			"response": []
+		},
+		{
+			"name": "User - GET me",
+			"request": {
+				"url": "{{url}}/api/users/me",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "{{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User - Register",
+			"request": {
+				"url": "http://localhost:3000/api/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Test 01\",\n\t\"email\": \"test01@h.hu\",\n\t\"password\": \"12345\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User - CREATE",
+			"request": {
+				"url": "{{url}}/api/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"user1@test.com\",\n\t\"password\": \"123456\",\n\t\"name\": \"User 1\"\n}"
+				},
+				"description": "Users - POST"
+			},
+			"response": []
+		},
+		{
+			"name": "Customer - GET",
+			"request": {
+				"url": "{{url}}/api/customers",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"customer 1\",\n\t\"phone\": \"0620222\",\n\t\"isGold\": false\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

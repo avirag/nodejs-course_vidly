@@ -8,21 +8,24 @@ let server;
 describe('/api/genres', () => {
   beforeEach(() => server = require('../../index'));
   afterEach(async () => {
-    await server.close();
-    await Genre.remove({});
+    await Genre.remove({}).exec();
+    // await server.close();
   });
 
   describe('GET /', () => {
     it('should return all genres', async () => {
-      Genre.collection.insertMany([
-        { name: 'genre1' },
-        { name: 'genre2' }
-      ]);
+      const genre1 = new Genre({ name: 'genre1'});
+      await genre1.save();
+
+      const genre2 = new Genre({ name: 'genre2'});
+      await genre2.save();
 
       const res = await request(server).get('/api/genres');
+
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
       expect(res.body.some(g => g.name === 'genre1')).toBeTruthy();
+      expect(res.body.some(g => g.name === 'genre2')).toBeTruthy();
     })
   });
 
@@ -41,7 +44,7 @@ describe('/api/genres', () => {
       expect(res.status).toBe(404);
     });
 
-    it('should return 404 no genre with the given id exists', async () => {
+    it('should return 404 if no genre with the given id exists', async () => {
       const id = mongoose.Types.ObjectId();
       const res = await request(server).get('/api/genres/' + id);
       expect(res.status).toBe(404);
@@ -90,7 +93,7 @@ describe('/api/genres', () => {
     });
 
     it('should return the genre if it is valid', async () => {
-      const res = exec();
+      const res = await exec();
       expect(res.body).toHaveProperty('_id');
       expect(res.body).toHaveProperty('name', 'genre1');
     });

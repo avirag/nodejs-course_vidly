@@ -34,6 +34,7 @@ describe('/api/returns', () => {
       genre: { name: '12345' },
       numberInStock: 10
     });
+    await movie.save();
 
     rental = new Rental({
       customer: {
@@ -47,10 +48,11 @@ describe('/api/returns', () => {
         dailyRentalRate: 2
       }
     });
+    await rental.save();
   });
 
   afterEach(async () => {
-    await server.close();
+    // await server.close();
     await Rental.remove({});
     await Movie.remove({});
   });
@@ -64,13 +66,13 @@ describe('/api/returns', () => {
   it('should return 400 if customer id is not provided', async () => {
     customerId = '';
     const res = await exec();
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(400);
   });
 
   it('should return 400 if movie id is not provided', async () => {
     movieId = '';
     const res = await exec();
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(400);
   });
 
   it('should return 404 if no rental found for customer/movie combination', async () => {
